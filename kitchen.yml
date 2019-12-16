@@ -9,7 +9,7 @@ driver:
   instance_type: t2.micro
   tags:
     # Replace YOURNAME here
-    Name: "<yourname>-node"
+    Name: "<YOURNAME>-node"
     X-Contact: "tbagio"
     X-Application: "apac"
     X-Dept: "sales"
