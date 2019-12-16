@@ -17,7 +17,8 @@ describe package ('httpd') do
 end
 
 describe file ('/var/www/html/index.html') do
-    if {should exist}
+    it {should exist}
+end
 
 describe command('curl localhost:80') do
   its('stdout') {should cmp /hello/i}
