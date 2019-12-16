@@ -1,0 +1,48 @@
+---
+driver:
+  name: ec2
+  aws_ssh_key_id: chef_demo_2x
+  region: us-west-2
+  security_group_ids: sg-04ea1af1166a3a8c3
+  subnet_id: subnet-0c9487f98c8c5ed0b
+  associate_public_ip: true
+  instance_type: t2.micro
+  tags:
+    # Replace YOURNAME here
+    Name: "<yourname>-node"
+    X-Contact: "tbagio"
+    X-Application: "apac"
+    X-Dept: "sales"
+    X-Customer: "apjcorp"
+    X-Project: "demo/training"
+    X-TTL: 100
+
+provisioner:
+  name: chef_zero
+  product_name: chef
+  product_version: 14.12.3
+  client_rb:
+    chef_license: accept
+
+verifier:
+  name: inspec
+  reporter: documentation
+
+platforms:
+  - name: rhel75
+    transport:
+      username: ec2-user
+      ssh_key: ~/.ssh/id_rsa
+    driver:
+      image_id: ami-28e07e50
+    driver_config:
+      user_data: ./kitchen_user_data
+
+suites:
+  - name: ws1
+    run_list:
+      - recipe[webserver::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
