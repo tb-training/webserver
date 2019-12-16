@@ -10,8 +10,6 @@ describe port(80) do
   it { should be_listening }
 end
 
-## case insensitive match
-##
 describe package ('httpd') do
     it {should be_installed}
 end
@@ -20,6 +18,7 @@ describe file ('/var/www/html/index.html') do
     it {should exist}
 end
 
+## case insensitive match
 describe command('curl localhost:80') do
   its('stdout') {should cmp /hello/i}
 end
